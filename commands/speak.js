@@ -65,6 +65,6 @@ module.exports = {
         });
 
         const buffer = await speakAndChangeVoice(text);
-        await interaction.editReply({ files: [{ attachment: buffer}] });
+        await interaction.editReply({ files: [{ attachment: buffer, name: 'output.wav', contentType: 'audio/x-wav' }] });
     }
 }
