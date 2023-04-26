@@ -70,10 +70,9 @@ module.exports = {
     await writeStream.write(buffer); // 将 Buffer 写入到文件
     await writeStream.close();
   
-    const fileStream = fs.createReadStream(fileName);
     await interaction.editReply({
       files: [{
-        attachment: fileStream,
+        attachment: fileName,
         name: fileName
       }]
     });
