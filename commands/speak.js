@@ -53,8 +53,8 @@ module.exports = {
                     request.post(options, async (error, response, body) => {
                         await interaction.editReply({ files: [{ attachment: Buffer.from(body), name: 'output.wav' }] });
                     });
-                    synthesizer.close();
                 }
+                synthesizer.close();
             },
             error => {
                 console.log(error);
