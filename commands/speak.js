@@ -35,13 +35,7 @@ module.exports = {
                 const options = {
                     url: 'http://121.41.44.246:7860/voiceChangeModel',
                     formData: {
-                        sample: {
-                            value: result.audioData,
-                            options: {
-                                filename: 'output.wav',
-                                contentType: 'audio/wav'
-                            }
-                        },
+                        sample: fs.createReadStream(result.audioData),
                         fPitchChange: '1',
                         sampleRate: '44100'
                     }
