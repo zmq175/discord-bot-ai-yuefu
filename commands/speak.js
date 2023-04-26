@@ -35,7 +35,7 @@ async function speakAndChangeVoice(text) {
           try {
             const response = await axios.post('http://121.41.44.246:7860/voiceChangeModel', form, { headers });
             resolve(new Blob([response], {
-              type: 'audio/wav'
+              type: 'audio/x-wav'
             }));
           } catch (error) {
             reject(error);
@@ -73,9 +73,12 @@ module.exports = {
     const buffer = await speakAndChangeVoice(text);
     const audioData = await buffer.arrayBuffer();
     const audioBuffer = Buffer.from(audioData);
-
     await interaction.editReply({
-      files: [audioBuffer]
+      files: [{
+        attachment: audioBuffer,
+        name: 'output.wav'
+      }],
+      content: '这是我说的话：'
     });
   }
 }
