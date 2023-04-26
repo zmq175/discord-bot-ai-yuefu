@@ -66,7 +66,7 @@ module.exports = {
 
     const buffer = await speakAndChangeVoice(text);
     const fileName = 'output.wav';
-    const writeStream = createWriteStream(fileName);
+    const writeStream = fs.createWriteStream(fileName);
     await writeStream.write(buffer); // 将 Buffer 写入到文件
     await writeStream.close();
   
