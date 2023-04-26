@@ -30,10 +30,11 @@ module.exports = {
         synthesizer.speakTextAsync(
             text,
             result => {
+                console.log(result.audioData.byteLength);
                 const request = require('request');
                 const formData = {
                     sample: {
-                      value: Buffer.from(result.audioData),
+                      value: Buffer.from(result),
                       options: {
                         filename: 'output.wav',
                         contentType: 'audio/wav'
