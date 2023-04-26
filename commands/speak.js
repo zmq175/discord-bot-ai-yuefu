@@ -71,22 +71,10 @@ module.exports = {
     });
 
     const buffer = await speakAndChangeVoice(text);
-    const fileName = 'output.wav';
-    const writeStream = fs.createWriteStream(fileName);
-    const reader = new FileReader();
-    reader.readAsArrayBuffer(blob);
-    reader.onload = () => {
-      const buffer = Buffer.from(reader.result);
-      writeStream.write(buffer);
-      writeStream.end();
-    };
-    reader.onerror = (error) => {
-      console.error(error);
-    };
   
     await interaction.editReply({
       files: [{
-        attachment: fileName,
+        attachment: Buffer.from(await buffer.arrayBuffer()),
         name: fileName
       }]
     });
