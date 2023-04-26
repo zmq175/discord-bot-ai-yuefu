@@ -65,12 +65,12 @@ module.exports = {
     });
 
     const buffer = await speakAndChangeVoice(text);
-    const filename = 'output.wav';
-    const { promisify } = require('util');
-    await promisify(fs.createWriteStream(filename)).write(buffer);
-
-    const fileStream = createReadStream(filename);
-
+    const fileName = 'output.wav';
+    const writeStream = createWriteStream(fileName);
+    await writeStream.write(buffer); // 将 Buffer 写入到文件
+    await writeStream.close();
+  
+    const fileStream = createReadStream(fileName);
     await interaction.editReply({
       files: [{
         attachment: fileStream,
