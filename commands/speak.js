@@ -30,7 +30,7 @@ module.exports = {
         synthesizer.speakTextAsync(
             text,
             result => {
-                speechSynthesizer.close();
+                synthesizer.close();
                 const request = require('request');
                 const options = {
                     url: 'http://121.41.44.246:7860/voiceChangeModel',
@@ -55,7 +55,7 @@ module.exports = {
             },
             error => {
                 console.log(error);
-                speechSynthesizer.close();
+                synthesizer.close();
             });
     }
 }
