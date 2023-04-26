@@ -35,7 +35,7 @@ module.exports = {
                 const request = require('request');
                 const formData = {
                     sample: {
-                      value: Buffer.from(result),
+                      value: Buffer.from(result.audioData),
                       options: {
                         filename: 'output.wav',
                         contentType: 'audio/wav'
