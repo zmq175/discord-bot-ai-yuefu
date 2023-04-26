@@ -31,28 +31,30 @@ module.exports = {
         synthesizer.speakTextAsync(
             text,
             result => {
-                console.log(result.audioData.byteLength);
-                const request = require('request');
-                const formData = {
-                    sample: {
-                      value: Buffer.from(result.audioData),
-                      options: {
-                        filename: 'output.wav',
-                        contentType: 'audio/wav'
-                      }
-                    },
-                    fPitchChange: '1',
-                    sampleRate: '44100'
-                  };
-                const options = {
-                    url: 'http://121.41.44.246:7860/voiceChangeModel',
-                    formData: formData,
-                    headers: { Authorization: process.env.AUTH },
-                };
-                request.post(options, async (error, response, body) => {
-                    await interaction.editReply({files: [{attachment: Buffer.from(body), name:'output.wav'}]});
-                });
-                synthesizer.close();
+                if (result.reason === sdk.ResultReason.SynthesizingAudioCompleted) {
+                    console.log(result.audioData.byteLength);
+                    const request = require('request');
+                    const formData = {
+                        sample: {
+                            value: Buffer.from(result.audioData),
+                            options: {
+                                filename: 'output.wav',
+                                contentType: 'audio/wav'
+                            }
+                        },
+                        fPitchChange: '1',
+                        sampleRate: '44100'
+                    };
+                    const options = {
+                        url: 'http://121.41.44.246:7860/voiceChangeModel',
+                        formData: formData,
+                        headers: { Authorization: process.env.AUTH },
+                    };
+                    request.post(options, async (error, response, body) => {
+                        await interaction.editReply({ files: [{ attachment: Buffer.from(body), name: 'output.wav' }] });
+                    });
+                    synthesizer.close();
+                }
             },
             error => {
                 console.log(error);
