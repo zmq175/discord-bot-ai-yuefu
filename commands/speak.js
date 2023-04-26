@@ -33,7 +33,7 @@ async function speakAndChangeVoice(text) {
                       headers: { Authorization: process.env.AUTH },
                   };
                   request.post(options, async (error, response, body) => {
-                      resolve(Buffer.from(body));
+                      resolve(body);
                   });
               }
               synthesizer.close();
