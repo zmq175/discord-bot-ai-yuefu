@@ -1,7 +1,7 @@
 const { ActionRowBuilder, ButtonBuilder, ButtonStyle, SlashCommandBuilder, ChatInputCommandInteraction } = require('discord.js');
 const fs = require('fs');
 const sdk = require('microsoft-cognitiveservices-speech-sdk');
-
+const request = require('request');
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -17,7 +17,6 @@ module.exports = {
      */
     async execute(interaction) {
         const text = interaction.options.getString('text');
-        // await interaction.reply('Pong!');
         const message = await interaction.deferReply({
             fetchReply: true
         });
@@ -30,14 +29,13 @@ module.exports = {
 
         // 将文本转换为语音
         synthesizer.speakTextAsync(
-            'Hello, world!',
+            text,
             (result) => {
                 if (result.reason === sdk.ResultReason.SynthesizingAudioCompleted) {
                     console.log(`Speech synthesized: ${result.audioData.length} bytes`);
 
                     // 将语音数据作为此API的输入，通过HTTP POST请求将其发送到API
                     // 请注意，这里只是提供了一个示例URL，您需要根据实际情况替换URL。
-                    const request = require('request');
                     const options = {
                         url: 'http://121.41.44.246:7860/voiceChangeModel',
                         formData: {
@@ -53,10 +51,16 @@ module.exports = {
                         }
                     };
                     request.post(options, async (error, response, body) => {
+                        if (error) {
+                            console.error(error);
+                            await interaction.editReply('发生错误，请稍后重试。');
+                            return;
+                        }
+
                         const audioBuffer = Buffer.from(body);
                         const buff = [];
                         buff.push(audioBuffer);
-                        await interaction.editReply({files: buff});
+                        await interaction.editReply({ files: buff });
                     });
                 }
             },
