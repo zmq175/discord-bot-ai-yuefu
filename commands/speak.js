@@ -5,7 +5,7 @@ const request = require('request');
 
 async function speakAndChangeVoice(text) {
   const { AudioConfig, SpeechSynthesizer, ResultReason } = require('microsoft-cognitiveservices-speech-sdk');
-  const config = sdk.SpeechConfig.fromSubscription(process.env.SPEECH_KEY, process.env.SERVICE_REGION);
+  const config = sdk.SpeechConfig.fromSubscription(process.env.SPEECH_KEY, process.env.SPEECH_REGION);
   config.speechSynthesisLanguage = 'zh-CN';
   const synthesizer = new SpeechSynthesizer(config, AudioConfig.fromAudioFileOutput('./output.wav'));
 
