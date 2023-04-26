@@ -24,7 +24,7 @@ module.exports = {
         // 设置语音转换器的配置
         const speechConfig = sdk.SpeechConfig.fromSubscription(process.env.SPEECH_KEY, process.env.SPEECH_REGION);
 
-        speechConfig.speechSynthesisOutputFormat = sdk.SpeechSynthesisOutputFormat.Riff24Khz16BitMonoPcm;
+        speechConfig.speechSynthesisOutputFormat = sdk.SpeechSynthesisOutputFormat.Audio16Khz16BitMonoWav;
         // 创建语音合成器
         const synthesizer = new sdk.SpeechSynthesizer(speechConfig, null);
 
