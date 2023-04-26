@@ -27,47 +27,35 @@ module.exports = {
         // 创建语音合成器
         const synthesizer = new sdk.SpeechSynthesizer(speechConfig);
 
-        // 将文本转换为语音
-        synthesizer.speakTextAsync(
+        speechSynthesizer.speakTextAsync(
             text,
-            (result) => {
-                if (result.reason === sdk.ResultReason.SynthesizingAudioCompleted) {
-                    console.log(`Speech synthesized: ${result.audioData.length} bytes`);
-
-                    // 将语音数据作为此API的输入，通过HTTP POST请求将其发送到API
-                    // 请注意，这里只是提供了一个示例URL，您需要根据实际情况替换URL。
-                    const options = {
-                        url: 'http://121.41.44.246:7860/voiceChangeModel',
-                        formData: {
-                            sample: {
-                                value: result.audioData,
-                                options: {
-                                    filename: 'output.wav',
-                                    contentType: 'audio/wav'
-                                }
-                            },
-                            fPitchChange: '1',
-                            sampleRate: '44100'
-                        }
-                    };
-                    request.post(options, async (error, response, body) => {
-                        if (error) {
-                            console.error(error);
-                            await interaction.editReply('发生错误，请稍后重试。');
-                            return;
-                        }
-
-                        const audioBuffer = Buffer.from(body);
-                        const buff = [];
-                        buff.push(audioBuffer);
-                        await interaction.editReply({ files: buff });
-                    });
-                }
+            result => {
+                speechSynthesizer.close();
+                const request = require('request');
+                const options = {
+                    url: 'http://121.41.44.246:7860/voiceChangeModel',
+                    formData: {
+                        sample: {
+                            value: result.audioData,
+                            options: {
+                                filename: 'output.wav',
+                                contentType: 'audio/wav'
+                            }
+                        },
+                        fPitchChange: '1',
+                        sampleRate: '44100'
+                    }
+                };
+                request.post(options, async (error, response, body) => {
+                    let buff =[];
+                    buff.push(Buffer.from(body))
+                    console.log(body);
+                    await interaction.editReply({files: buff});
+                });
             },
-            (error) => {
-                console.error(error);
-                synthesizer.close();
-            }
-        );
+            error => {
+                console.log(error);
+                speechSynthesizer.close();
+            });
     }
 }
