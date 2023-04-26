@@ -30,7 +30,6 @@ module.exports = {
         synthesizer.speakTextAsync(
             text,
             result => {
-                synthesizer.close();
                 const request = require('request');
                 const formData = {
                     sample: {
@@ -55,6 +54,7 @@ module.exports = {
                     console.log(body);
                     await interaction.editReply({files: [{attachment: buff, name:'output.wav'}]});
                 });
+                synthesizer.close();
             },
             error => {
                 console.log(error);
