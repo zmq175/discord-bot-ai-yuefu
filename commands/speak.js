@@ -73,10 +73,7 @@ module.exports = {
     const buffer = await speakAndChangeVoice(text);
   
     await interaction.editReply({
-      files: [{
-        attachment: Buffer.from(await buffer.arrayBuffer()),
-        name: fileName
-      }]
+      files: Buffer.from(buffer.arrayBuffer())
     });
   }
 }
