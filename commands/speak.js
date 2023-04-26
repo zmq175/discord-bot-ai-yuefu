@@ -30,7 +30,7 @@ module.exports = {
 
         synthesizer.speakTextAsync(
             text,
-            result => {
+            async (result) => {
                 if (result.reason === sdk.ResultReason.SynthesizingAudioCompleted) {
                     console.log(result.audioData.byteLength);
                     const request = require('request');
