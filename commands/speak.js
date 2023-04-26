@@ -66,6 +66,7 @@ module.exports = {
 
     const buffer = await speakAndChangeVoice(text);
     const filename = 'output.wav';
+    const { promisify } = require('util');
     await promisify(fs.createWriteStream(filename)).write(buffer);
 
     const fileStream = createReadStream(filename);
