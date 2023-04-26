@@ -8,7 +8,7 @@ async function speakAndChangeVoice(text) {
   const { AudioConfig, SpeechSynthesizer, ResultReason } = require('microsoft-cognitiveservices-speech-sdk');
   const config = sdk.SpeechConfig.fromSubscription(process.env.SPEECH_KEY, process.env.SPEECH_REGION);
   config.speechSynthesisLanguage = 'zh-CN';
-  speechConfig.speechSynthesisVoiceName = "zh-CN-YunfengNeural"; 
+  speechConfig.speechSynthesisVoiceName = "zh-CN-YunzeNeural"; 
   const synthesizer = new SpeechSynthesizer(config, AudioConfig.fromAudioFileOutput('./output.wav'));
 
   return new Promise((resolve, reject) => {
