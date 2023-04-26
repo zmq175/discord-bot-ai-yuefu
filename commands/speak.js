@@ -73,7 +73,7 @@ module.exports = {
     const buffer = await speakAndChangeVoice(text);
   
     await interaction.editReply({
-      files: Buffer.from(buffer.arrayBuffer())
+      files: Buffer.from(await buffer.arrayBuffer())
     });
   }
 }
