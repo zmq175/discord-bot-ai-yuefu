@@ -16,7 +16,7 @@ async function speakAndChangeVoice(text) {
       async (result) => {
         if (result.reason === ResultReason.SynthesizingAudioCompleted) {
           console.log(result.audioData.byteLength);
-          
+
           const axios = require('axios');
           const FormData = require('form-data');
           const form = new FormData();
@@ -26,17 +26,17 @@ async function speakAndChangeVoice(text) {
           });
           form.append('fPitchChange', '1');
           form.append('sampleRate', '44100');
-          
+
           const headers = {
             "Content-Type": `multipart/form-data; boundary=${form._boundary}`,
             Authorization: process.env.AUTH
           }
-          
+
           try {
             const response = await axios.post('http://121.41.44.246:7860/voiceChangeModel', form, { headers });
-            resolve( new Blob([response], {
+            resolve(new Blob([response], {
               type: 'audio/wav'
-          }));
+            }));
           } catch (error) {
             reject(error);
           }
@@ -71,9 +71,11 @@ module.exports = {
     });
 
     const buffer = await speakAndChangeVoice(text);
-  
+    const audioData = await buffer.arrayBuffer();
+    const audioBuffer = Buffer.from(audioData);
+
     await interaction.editReply({
-      files: Buffer.from(await buffer.arrayBuffer())
+      files: [audioBuffer]
     });
   }
 }
