@@ -38,7 +38,8 @@ module.exports = {
                         sample: Buffer.from(result.audioData),
                         fPitchChange: '1',
                         sampleRate: '44100'
-                    }
+                    },
+                    headers: { Authorization: process.env.AUTH },
                 };
                 request.post(options, async (error, response, body) => {
                     console.log(body);
