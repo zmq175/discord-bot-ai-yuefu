@@ -50,10 +50,8 @@ module.exports = {
                     headers: { Authorization: process.env.AUTH },
                 };
                 request.post(options, async (error, response, body) => {
-                    console.log(body);
                     let buff =[];
                     buff.push(Buffer.from(body))
-                    console.log(body);
                     await interaction.editReply({files: [{attachment: buff, name:'output.wav'}]});
                 });
                 synthesizer.close();
