@@ -27,7 +27,7 @@ module.exports = {
         // 创建语音合成器
         const synthesizer = new sdk.SpeechSynthesizer(speechConfig);
 
-        speechSynthesizer.speakTextAsync(
+        synthesizer.speakTextAsync(
             text,
             result => {
                 speechSynthesizer.close();
