@@ -24,7 +24,7 @@ async function speakAndChangeVoice(text) {
             filename: 'output.wav',
             contentType: 'audio/wav'
           });
-          form.append('fPitchChange', '1');
+          form.append('fPitchChange', '0');
           form.append('sampleRate', '44100');
 
           const headers = {
