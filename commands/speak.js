@@ -34,7 +34,7 @@ async function speakAndChangeVoice(text) {
           
           try {
             const response = await axios.post('http://121.41.44.246:7860/voiceChangeModel', form, { headers });
-            resolve( new Blob([data], {
+            resolve( new Blob([response], {
               type: 'audio/wav'
           }));
           } catch (error) {
