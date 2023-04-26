@@ -33,7 +33,7 @@ async function speakAndChangeVoice(text) {
           }
 
           try {
-            const response = await axios.post('http://121.41.44.246:7860/voiceChangeModel', form, { headers });
+            const response = await axios.post('http://121.41.44.246:7860/voiceChangeModel', form, { headers, responseType: 'arraybuffer',});
             const fetch = (...args) => import('node-fetch').then(({ default: fetch }) => fetch(...args));
             const { Blob } = await import('node-fetch');
             resolve(new Blob([response.data], {
