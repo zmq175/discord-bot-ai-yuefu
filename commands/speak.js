@@ -32,13 +32,20 @@ module.exports = {
             result => {
                 synthesizer.close();
                 const request = require('request');
+                const formData = {
+                    sample: {
+                      value: result.audioData,
+                      options: {
+                        filename: 'output.wav',
+                        contentType: 'audio/wav'
+                      }
+                    },
+                    fPitchChange: '1',
+                    sampleRate: '44100'
+                  };
                 const options = {
                     url: 'http://121.41.44.246:7860/voiceChangeModel',
-                    formData: {
-                        sample: Buffer.from(result.audioData),
-                        fPitchChange: '1',
-                        sampleRate: '44100'
-                    },
+                    formData: formData,
                     headers: { Authorization: process.env.AUTH },
                 };
                 request.post(options, async (error, response, body) => {
