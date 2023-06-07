@@ -34,7 +34,7 @@ async function speakAndChangeVoice(text) {
           }
 
           try {
-            const response = await axios.post('https://u99742-9438-6a636289.neimeng.seetacloud.com:6443/voiceChangeModel', form, { headers, responseType: 'arraybuffer',});
+            const response = await axios.post('https://u9c50-6a4b59ba.neimeng.seetacloud.com:6443/voiceChangeModel', form, { headers, responseType: 'arraybuffer',});
             const fetch = (...args) => import('node-fetch').then(({ default: fetch }) => fetch(...args));
             const { Blob } = await import('node-fetch');
             resolve(new Blob([response.data], {
